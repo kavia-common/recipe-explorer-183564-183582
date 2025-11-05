@@ -1,36 +1,35 @@
 #!/usr/bin/env sh
+
 ##############################################################################
 ##
-##  Gradle start up script for UN*X
+##  Gradle start up script for UN*X (standard wrapper)
 ##
 ##############################################################################
-# This is a minimal, text-mode Gradle wrapper script compatible with CI/containers.
 
 # Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
 DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m"'
 
-APP_BASE_NAME=`basename "$0"`
+APP_BASE_NAME=$(basename "$0")
 
 # Resolve APP_HOME
 PRG="$0"
+# Need this for relative symlinks.
 while [ -h "$PRG" ] ; do
-  ls=`ls -ld "$PRG"`
-  link=`expr "$ls" : '.*-> \(.*\)$'`
+  ls=$(ls -ld "$PRG")
+  link=$(expr "$ls" : '.*-> \(.*\)$')
   if expr "$link" : '/.*' >/dev/null; then
     PRG="$link"
   else
-    PRG=`dirname "$PRG"`"/$link"
+    PRG=$(dirname "$PRG")"/$link"
   fi
 done
-SAVED_PWD="`pwd`"
-cd "`dirname \"$PRG\"`/" >/dev/null
-APP_HOME="`pwd -P`"
+SAVED_PWD=$(pwd)
+cd "$(dirname "$PRG")/" >/dev/null
+APP_HOME=$(pwd -P)
 cd "$SAVED_PWD" >/dev/null
 
-# Include both wrapper jars (main + shared) on the classpath. Some environments
-# only ship the properties file and expect us to download jars at runtime.
-# We place jars in gradle/wrapper and reference both to satisfy dependencies.
-CLASSPATH="$APP_HOME/gradle/wrapper/gradle-wrapper.jar:$APP_HOME/gradle/wrapper/gradle-wrapper-shared.jar"
+# Locate the wrapper jar. Use only the standard wrapper jar on classpath.
+CLASSPATH="$APP_HOME/gradle/wrapper/gradle-wrapper.jar"
 
 # Determine JAVA command
 if [ -n "$JAVA_HOME" ] ; then
@@ -48,20 +47,20 @@ else
   }
 fi
 
-# OS specific tweaks
-case "`uname`" in
+# OS specific tweaks (Cygwin/MSYS)
+case "$(uname)" in
   CYGWIN*|MINGW*|MSYS* )
-    APP_HOME=`printf '%s' "$APP_HOME" | sed -e 's#\\#/#g'`
-    CLASSPATH=`printf '%s' "$CLASSPATH" | sed -e 's#\\#/#g'`
+    APP_HOME=$(printf '%s' "$APP_HOME" | sed -e 's#\\#/#g')
+    CLASSPATH=$(printf '%s' "$CLASSPATH" | sed -e 's#\\#/#g')
     ;;
 esac
 
-# Quote args safely
+# Escape application args
 save () {
-  for i do printf %s\\n "$i" | sed "s/'/'\\\\''/g;1s/^/'/;\$s/\$/' \\\\/"; done
+  for i do printf %s\\n "$i" | sed "s/'/'\\\\''/g;1s/^/'/;\$s/\$/' \\\\\\\\/"; done
   echo " "
 }
-APP_ARGS=`save "$@"`
+APP_ARGS=$(save "$@")
 
 # Build final command
 eval set -- $DEFAULT_JVM_OPTS \
