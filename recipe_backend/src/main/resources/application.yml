@@ -10,5 +10,7 @@ management:
   endpoint:
     health:
       show-details: when_authorized
+
 server:
   port: 3001
+  address: 0.0.0.0

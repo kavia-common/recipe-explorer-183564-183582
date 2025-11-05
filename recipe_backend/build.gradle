@@ -6,20 +6,31 @@ plugins {
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
+description = 'Recipe Explorer Backend API'
 
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
     }
+    withSourcesJar()
 }
 
 repositories {
     mavenCentral()
 }
 
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    compileOnly 'org.projectlombok:lombok:1.18.34'
+    annotationProcessor 'org.projectlombok:lombok:1.18.34'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
@@ -28,12 +39,10 @@ tasks.withType(Test).configureEach {
     useJUnitPlatform()
 }
 
-// Ensure Gradle knows the main application class for bootRun and bootJar
 springBoot {
     mainClass = 'com.example.recipebackend.RecipeBackendApplication'
 }
 
-// Optional: make bootRun faster for local dev
 tasks.named('bootRun') {
     jvmArgs = ['-Dspring.output.ansi.enabled=ALWAYS']
 }
