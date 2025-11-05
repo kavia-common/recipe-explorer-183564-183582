@@ -28,8 +28,12 @@ cd "$(dirname "$PRG")/" >/dev/null
 APP_HOME=$(pwd -P)
 cd "$SAVED_PWD" >/dev/null
 
-# Locate the wrapper jar. Use only the standard wrapper jar on classpath.
+# Locate the wrapper jar(s). Include both standard and shared wrapper jars on the classpath if present.
 CLASSPATH="$APP_HOME/gradle/wrapper/gradle-wrapper.jar"
+SHARED_WRAPPER_JAR="$APP_HOME/gradle/wrapper/gradle-wrapper-shared.jar"
+if [ -f "$SHARED_WRAPPER_JAR" ]; then
+  CLASSPATH="$CLASSPATH:$SHARED_WRAPPER_JAR"
+fi
 
 # Determine JAVA command
 if [ -n "$JAVA_HOME" ] ; then
