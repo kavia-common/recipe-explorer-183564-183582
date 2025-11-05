@@ -27,7 +27,10 @@ cd "`dirname \"$PRG\"`/" >/dev/null
 APP_HOME="`pwd -P`"
 cd "$SAVED_PWD" >/dev/null
 
-CLASSPATH="$APP_HOME/gradle/wrapper/gradle-wrapper.jar"
+# Include both wrapper jars (main + shared) on the classpath. Some environments
+# only ship the properties file and expect us to download jars at runtime.
+# We place jars in gradle/wrapper and reference both to satisfy dependencies.
+CLASSPATH="$APP_HOME/gradle/wrapper/gradle-wrapper.jar:$APP_HOME/gradle/wrapper/gradle-wrapper-shared.jar"
 
 # Determine JAVA command
 if [ -n "$JAVA_HOME" ] ; then
