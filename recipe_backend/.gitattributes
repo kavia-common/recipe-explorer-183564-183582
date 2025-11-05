@@ -1,0 +1,6 @@
+# Ensure shell scripts use LF and are executable in Git environments
+gradlew text eol=lf
+*.sh text eol=lf
+
+# Mark gradlew as executable in Git attributes (many CIs respect this when cloning)
+gradlew -text
